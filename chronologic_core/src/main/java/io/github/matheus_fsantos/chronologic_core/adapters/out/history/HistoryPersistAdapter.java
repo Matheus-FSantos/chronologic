@@ -36,10 +36,21 @@ public class HistoryPersistAdapter implements HistoryPersistOutputPort {
                 Log log = this.objectMapper.readValue(current, Log.class);
 
                 String cleanedTimestamp = log.timestamp();
-                if (cleanedTimestamp != null && cleanedTimestamp.contains("-")) {
-                    if (cleanedTimestamp.lastIndexOf("-") > 10) {
+                if (cleanedTimestamp != null) {
+                    if (cleanedTimestamp.contains("Z")) {
+                        cleanedTimestamp = cleanedTimestamp.replace("Z", "");
+                    }
+                    if (cleanedTimestamp.contains("-") && cleanedTimestamp.lastIndexOf("-") > 10) {
                         cleanedTimestamp = cleanedTimestamp.substring(0, cleanedTimestamp.lastIndexOf("-"));
                     }
+                }
+
+                String cleanedMetadata = log.metadata();
+                if (cleanedMetadata != null) {
+                    if (cleanedMetadata.startsWith("\"") && cleanedMetadata.endsWith("\"")) {
+                        cleanedMetadata = cleanedMetadata.substring(1, cleanedMetadata.length() - 1);
+                    }
+                    cleanedMetadata = cleanedMetadata.replace("\\\"", "\"").replace("\\\\", "\\");
                 }
 
                 String line = String.format("%s|%s|%s|%s|%s|%s|%s",
@@ -49,7 +60,7 @@ public class HistoryPersistAdapter implements HistoryPersistOutputPort {
                     sanitize(log.level()),
                     sanitize(log.traceId()),
                     sanitize(log.message()),
-                    sanitize(log.metadata())
+                    sanitize(cleanedMetadata)
                 );
 
                 writer.write(line);

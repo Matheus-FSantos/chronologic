@@ -13,7 +13,7 @@ public class PersistLogsScheduler {
     private final MoveLogsToHistoryInputPort moveLogsToHistoryInputPort;
     private static final String CLASS_NAME = PersistLogsScheduler.class.getSimpleName();
 
-    @Scheduled(cron = "0 0/10 * * * *")
+    @Scheduled(initialDelay = 0, fixedDelay = 300000000L)
     public void persist() {
         log.info("{} - persist - message: scheduler trigger fired <--- CRON/BEGIN", PersistLogsScheduler.CLASS_NAME);
         this.moveLogsToHistoryInputPort.move();
