@@ -19,7 +19,7 @@ The system architecture is split into two decoupled phases, ensuring that the co
                              ▼ (Asynchronous Micro-Batch - rightPush)
                    [ Redis Buffer (Volatile RAM) ] ➔ 36h TTL / Partitioned by Hour
                              │
-                      [ Scheduler Job ] ➔ Runs every 15 minutes (Half of TTL)
+                   [ Scheduler Job ] ➔ Runs every 15 minutes (Half of TTL)
                              │
                              ▼ (Guards and processes strictly past hour keys)
                    [ MoveLogsToHistoryUseCase ]
