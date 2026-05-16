@@ -11,3 +11,11 @@ spring:
           max-active: 16
           max-idle: 8
           min-idle: 2
+  datasource:
+    url: jdbc:clickhouse://localhost:8123/default
+    username: default
+    password: "vivo123"
+    driver-class-name: com.clickhouse.jdbc.ClickHouseDriver
+    hikari:
+      initialization-fail-timeout: 0 # Impede o Spring de quebrar se o ClickHouse demorar para responder
+      connection-timeout: 5000
