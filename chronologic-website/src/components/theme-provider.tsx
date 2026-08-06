@@ -146,8 +146,7 @@ export function ThemeProvider({
       }
 
       if (event.metaKey || event.ctrlKey || event.altKey) {
-        return
-      }
+        return      }
 
       if (isEditableTarget(event.target)) {
         return
@@ -172,7 +171,7 @@ export function ThemeProvider({
       })
     }
 
-    window.addEventListener("keydown", handleKeyDown)
+    //window.addEventListener("keydown", handleKeyDown) -> disable event listener to this toggle
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown)
